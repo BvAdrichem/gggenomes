@@ -1,14 +1,11 @@
 #' Draw wiggle ribbons or lines
 #'
-#' Visualize data that varies along sequences as ribbons, lines, lineranges,
-#' etc.
-#'
-#' @param bounds mid, low and high boundary value for plotting wiggle data. Can
-#'   be a function or a vector returning those three values. Defaults to
+#' @param bounds geom_wiggle uses mid, low and high boundary values for plotting the wiggle data. Can
+#'   be both a function or a vector returning those three values. Defaults to
 #'   [Hmisc::smedian.hilow].
-#' @param height distance in plot between wiggle low and high.
-#' @param offset distance between seq center and wiggle mid.
-#' @section Aesthetics: `geom_wiggle()` understands aesthetics depending on the
+#' @param height distance in plot between lowest and highest point of the wiggle data.
+#' @param offset distance between seq center and wiggle mid/start.
+#' @section Aesthetics: `geom_wiggle()` and `geom_coverage()` understand aesthetics depending on the
 #'   chosen underlying ggplot geom, by default [ggplot2::geom_ribbon()]. Other
 #'   options that play well are for example [ggplot2::geom_line()],
 #'   [ggplot2::geom_linerange()], [ggplot2::geom_point()]. The only required
@@ -16,17 +13,18 @@
 #'   * **z**
 #' @export
 #' @examples
-#' # Plot varying GC-content along sequences as ribbon
+#' 
+#' # Plot varying GC-content along sequences as ribbon with geom_wiggle
 #' gggenomes(seqs=emale_seqs, feats=emale_gc) +
 #'   geom_wiggle(aes(z=score)) +
 #'   geom_seq()
 #'
-#' # customize color and position
+#' # Customize color and position
 #' gggenomes(genes=emale_genes, seqs=emale_seqs, feats=emale_gc) +
 #'   geom_wiggle(aes(z=score), fill="lavenderblush3", offset=-.3, height=.5) +
 #'   geom_seq() + geom_gene()
 #'
-#' # GC-content as line and with variable color
+#' # GC-content as line and with variable color with geom_wiggle
 #' gggenomes(seqs=emale_seqs, feats=emale_gc) +
 #'   geom_wiggle(aes(z=score, color=score), geom="line", bounds=c(.5,0,1)) +
 #'   geom_seq() +
